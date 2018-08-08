@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update]
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     @articles = Article.all
@@ -33,6 +33,16 @@ class ArticlesController < ApplicationController
     else
       flash.now[:danger] = 'Article has not been updated'
       render :edit
+    end
+  end
+
+  def destroy
+    if @article.destroy
+      flash[:notice] = 'Article has been deleted'
+      redirect_to articles_path
+    else
+      flash[:danger] = 'Article has not been deleted'
+      render :show
     end
   end
 
