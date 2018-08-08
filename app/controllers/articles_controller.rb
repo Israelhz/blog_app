@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -9,6 +10,10 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    unless @article.user == current_user
+      flash[:alert] = 'You can only edit your own article.'
+      redirect_to root_path
+    end
   end
 
   def new
@@ -27,22 +32,32 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article.update(article_params)
-      flash[:notice] = 'Article has been updated'
-      redirect_to @article
+    unless @article.user == current_user
+      flash[:alert] = 'You can only edit your own article.'
+      redirect_to root_path
     else
-      flash.now[:danger] = 'Article has not been updated'
-      render :edit
+      if @article.update(article_params)
+        flash[:notice] = 'Article has been updated'
+        redirect_to @article
+      else
+        flash.now[:danger] = 'Article has not been updated'
+        render :edit
+      end
     end
   end
 
   def destroy
-    if @article.destroy
-      flash[:notice] = 'Article has been deleted'
-      redirect_to articles_path
+    unless @article.user == current_user
+      flash[:alert] = 'You can only delete your own article.'
+      redirect_to root_path
     else
-      flash[:danger] = 'Article has not been deleted'
-      render :show
+      if @article.destroy
+        flash[:notice] = 'Article has been deleted'
+        redirect_to articles_path
+      else
+        flash[:danger] = 'Article has not been deleted'
+        render :show
+      end
     end
   end
 
