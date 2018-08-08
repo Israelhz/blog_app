@@ -11,13 +11,13 @@ class CommentsController < ApplicationController
 
       if @comment.save
         ActionCable.server.broadcast "comments",
-          render(partial: 'comments/comment', locals: {comment: @comment})
+          render_to_string(partial: 'comments/comment', locals: {comment: @comment})
         flash[:notice] = 'Comment has been created'
       else
         flash.now[:alert] = 'Comment has not been created'
       end
 
-      #redirect_to @article
+      redirect_to @article
     end
   end
 
