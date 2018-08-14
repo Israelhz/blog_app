@@ -1,24 +1,5 @@
-# README
+# Workout App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails application for the Udemy Course **Ruby on Rails 5 - BDD, RSpec and Capybara (Part 1)**.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The project is about a blog where users can sign up, post and comment articles from other authors in real time with ActionCable. The whole project was built using a **Business Driven Development** methodology using RSpec and Capybara as the main tools to write feature tests.
